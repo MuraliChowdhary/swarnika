@@ -1,0 +1,85 @@
+  // This is your Prisma schema file,
+  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+  // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+  // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+  generator client {
+    provider = "prisma-client-js"
+    // output   = "../src/generated/prisma"
+  }
+
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
+
+
+  
+
+  // Enum for User Roles to ensure type safety
+  enum Role {
+    Goldsmith
+    DesignCompany
+    Admin
+  }
+
+  // User Model: Stores data for all user types.
+  model User {
+    id            String     @id @default(cuid())
+    name          String
+    email         String     @unique
+    password      String // This will be a hashed password
+    role          Role       @default(Goldsmith)
+    companyName   String?
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
+
+    ornaments     Ornament[] // A Design Company can have many ornaments
+    favorites     Favorite[] // A user can have many favorites
+  }
+
+  // Category Model: For organizing ornaments.
+  model Category {
+    id            String     @id @default(cuid())
+    name          String     @unique
+    description   String?
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
+
+    ornaments     Ornament[] // A category can have many ornaments
+  }
+
+  // Ornament Model: The core design entry.
+  model Ornament {
+    id            String     @id @default(cuid())
+    name          String
+    description   String
+    designCode    String     @unique
+    images        String[]
+    weight        Float?
+    materials     String[]
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
+
+    category      Category   @relation(fields: [categoryId], references: [id])
+    categoryId    String
+
+    uploadedBy    User       @relation(fields: [uploadedById], references: [id])
+    uploadedById  String
+
+    favoritedBy   Favorite[]
+  }
+
+  // Favorite Model: A join table for the many-to-many relationship
+  // between Users and Ornaments.
+  model Favorite {
+    id            String     @id @default(cuid())
+    user          User       @relation(fields: [userId], references: [id])
+    userId        String
+    ornament      Ornament   @relation(fields: [ornamentId], references: [id])
+    ornamentId    String
+    createdAt     DateTime   @default(now())
+
+    @@unique([userId, ornamentId]) // A user can only favorite an ornament once
+  }
