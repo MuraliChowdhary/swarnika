@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { ArrowRight, BookOpen, UploadCloud, Heart } from 'lucide-react';
 
 const featuredDesigns = [
-    { name: "Emerald Necklace", image: "https://placehold.co/600x400/047857/FFFFFF?text=Necklace" },
-    { name: "Sapphire Ring", image: "https://placehold.co/600x400/1d4ed8/FFFFFF?text=Ring" },
-    { name: "Diamond Bracelet", image: "https://placehold.co/600x400/9333ea/FFFFFF?text=Bracelet" },
-    { name: "Gold Earrings", image: "https://placehold.co/600x400/f59e0b/FFFFFF?text=Earrings" },
+    { name: "Emerald Necklace", image: "https://res.cloudinary.com/duwwsrzyp/image/upload/v1753462936/Necklace_rm8ocw.webp" },
+    { name: "Diamond Ring", image: "https://res.cloudinary.com/duwwsrzyp/image/upload/v1753463122/ring1_gptxng.webp" },
+    { name: "Gold Bracelet", image: "https://res.cloudinary.com/duwwsrzyp/image/upload/v1753458795/Bracelet4_x3ypb8.webp" },
+    { name: "Gold Earrings", image: "https://res.cloudinary.com/duwwsrzyp/image/upload/v1753459619/Chandabalis5_enjq6i.webp" },
 ];
 
 const categories = [
